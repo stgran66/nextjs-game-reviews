@@ -8,6 +8,7 @@ interface ReviewPageProps {
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
+  console.log(slugs);
   return slugs.map(slug => ({ slug }));
 }
 
