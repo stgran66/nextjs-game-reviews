@@ -20,6 +20,7 @@ export async function getReviews() {
     const review = await getReview(slug);
     reviews.push(review);
   }
+  reviews.sort((a, b) => b.date.localeCompare(a.date));
   return reviews;
 }
 
@@ -30,4 +31,10 @@ export async function getSlugs() {
     .map(file => file.slice(0, -'.md'.length));
 
   return slugs;
+}
+
+// Featured review is the latest one
+export async function getFeaturedReview() {
+  const reviews = await getReviews();
+  return reviews[0];
 }
