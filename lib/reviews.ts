@@ -33,12 +33,12 @@ export async function getReview(slug: string): Promise<FullReview> {
   };
 }
 
-export async function getReviews(): Promise<Review[]> {
+export async function getReviews(pageSize: number): Promise<Review[]> {
   const { data } = await fetchReviews({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
     sort: ['publishedAt:desc'],
-    pagination: { pageSize: 6 },
+    pagination: { pageSize },
   });
   return data.map(toReview);
 }
@@ -50,12 +50,6 @@ export async function getSlugs(): Promise<string[]> {
     pagination: { pageSize: 100 },
   });
   return data.map(item => item.attributes.slug);
-}
-
-// Featured review is the latest one
-export async function getFeaturedReview(): Promise<Review> {
-  const reviews = await getReviews();
-  return reviews[0];
 }
 
 async function fetchReviews(params: any) {

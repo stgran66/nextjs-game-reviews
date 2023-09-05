@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import Heading from '@/components/Heading';
 import ShareLinkButton from '@/components/ShareLinkButton';
 import { getReview, getSlugs } from '@/lib/reviews';
@@ -8,7 +10,6 @@ interface ReviewPageProps {
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
-  console.log(slugs);
   return slugs.map(slug => ({ slug }));
 }
 
@@ -31,9 +32,10 @@ export default async function ReviewPage({
         <p className='italic pb-2'>{review.date}</p>
         <ShareLinkButton />
       </div>
-      <img
+      <Image
         src={review.image}
         alt=''
+        priority
         width='640'
         height='360'
         className='rounded mb-2'
