@@ -28,7 +28,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             className='text-orange-800 hover:underline '
           >
             RAWG
-          </a>
+          </a>{' '}
+          Deployed on Vercel
         </footer>
       </body>
     </html>
