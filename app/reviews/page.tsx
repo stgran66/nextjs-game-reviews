@@ -9,10 +9,14 @@ export const metadata = {
 
 export default async function ReviewsPage() {
   const reviews = await getReviews(6);
+  console.log(
+    `[Reviews page rendering], ${reviews.map(review => review.slug)}`
+  );
 
   return (
     <>
       <Heading>Reviews</Heading>
+
       <ul className='flex flex-row flex-wrap gap-3'>
         {reviews.map((review, index) => {
           return (

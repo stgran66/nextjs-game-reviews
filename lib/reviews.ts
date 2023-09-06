@@ -13,11 +13,14 @@ interface Review {
   title: string;
   date: string;
   image: string;
+  subtitle: string;
 }
 
 interface FullReview extends Review {
   body: string;
 }
+
+export const CACHE_TAG_REVIEWS = 'reviews';
 
 export async function getReview(slug: string): Promise<FullReview> {
   const { data } = await fetchReviews({
@@ -26,6 +29,9 @@ export async function getReview(slug: string): Promise<FullReview> {
     populate: { image: { fields: ['url'] } },
     pagination: { pageSize: 1, withCount: false },
   });
+  if (data.length === 0) {
+    return null;
+  }
   const item = data[0];
   return {
     ...toReview(item),
@@ -57,7 +63,11 @@ async function fetchReviews(params: any) {
     `${CMS_URL}/api/reviews?` +
     qs.stringify(params, { encodeValuesOnly: true });
 
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    next: {
+      tags: [CACHE_TAG_REVIEWS],
+    },
+  });
 
   if (!response.ok) {
     throw new Error(`CMS returned ${response.status} for ${url}`);
@@ -73,5 +83,6 @@ function toReview(item: CmsItem): Review {
     title: attributes.title,
     date: attributes.publishedAt.slice(0, 'yyyy-mm-dd'.length),
     image: CMS_URL + attributes.image.data.attributes.url,
+    subtitle: attributes.subtitle,
   };
 }

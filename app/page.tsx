@@ -5,14 +5,15 @@ import { getReviews } from '@/lib/reviews';
 import Image from 'next/image';
 
 export default async function HomePage() {
-  const revies = await getReviews(3);
+  const reviews = await getReviews(3);
+  console.log(`[Home page rendering], ${reviews.map(review => review.slug)}`);
 
   return (
     <>
       <Heading>Indie Gamer</Heading>
       <p className='pb-3'>Only the best indie games, reviewed for you</p>
       <ul className='flex flex-col gap-3'>
-        {revies.map(({ slug, image, title }, index) => (
+        {reviews.map(({ slug, image, title, subtitle }, index) => (
           <li
             className='border w-80 bg-white rounded hover:shadow-xl sm:w-full'
             key={slug}
@@ -29,9 +30,10 @@ export default async function HomePage() {
                 height='180'
                 className=' rounded-t sm:rounded-l sm:rounded-r-none'
               />
-              <h2 className='font-orbitron py-1 text-center font-semibold sm:px-2'>
-                {title}
-              </h2>
+              <div className='px-2 text-center py-1 sm:text-left'>
+                <h2 className='font-orbitron  font-semibold '>{title}</h2>
+                <p className='hidden sm:block pt-2'>{subtitle}</p>
+              </div>
             </Link>
           </li>
         ))}
