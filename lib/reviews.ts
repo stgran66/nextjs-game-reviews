@@ -2,7 +2,7 @@ import 'server-only';
 import { marked } from 'marked';
 import axios from 'axios';
 
-const CMS_URL = process.env.CMS_URL;
+const API_URL = process.env.API_URL;
 
 interface Review {
   slug: string;
@@ -61,38 +61,38 @@ export async function searchReviews(
 }
 
 async function fetchReviews(pageSize?: number, page?: number) {
-  const url = `${CMS_URL}/reviews?`;
+  const url = `${API_URL}/reviews?`;
   const response = await axios.get(url, {
     params: { perPage: pageSize, page },
   });
 
   if (response.statusText !== 'OK') {
-    throw new Error(`CMS returned ${response.status} for ${url}`);
+    throw new Error(`API returned ${response.status} for ${url}`);
   }
 
   return await response.data;
 }
 
 async function filterReviews(query: string, pageSize: number) {
-  const url = `${CMS_URL}/reviews/search`;
+  const url = `${API_URL}/reviews/search`;
   const response = await axios.get(url, {
     params: { query, pageSize },
   });
 
   if (response.statusText !== 'OK') {
-    throw new Error(`CMS returned ${response.status} for ${url}`);
+    throw new Error(`API returned ${response.status} for ${url}`);
   }
 
   return await response.data;
 }
 
 async function fetchReview(slug) {
-  const url = `${CMS_URL}/reviews/${slug}`;
+  const url = `${API_URL}/reviews/${slug}`;
 
   const response = await axios.get(url);
 
   if (response.statusText !== 'OK') {
-    throw new Error(`CMS returned ${response.status} for ${url}`);
+    throw new Error(`API returned ${response.status} for ${url}`);
   }
   return await response.data;
 }
