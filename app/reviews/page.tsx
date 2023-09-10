@@ -14,15 +14,11 @@ const PAGE_SIZE = 6;
 export default async function ReviewsPage({ searchParams }) {
   const page = parsePageParam(searchParams.page);
   const { reviews, pageCount } = await getReviews(PAGE_SIZE, page);
-  // console.log(
-  //   `[Reviews page rendering]`,
-  //   reviews.map(({ slug, title }) => ({ slug, title }))
-  // );
 
   return (
     <>
       <Heading>Reviews</Heading>
-      <div className='flex justify-between pb-3'>
+      <div className='flex justify-between items-center pb-3'>
         <PaginationBar page={page} pageCount={pageCount} href='/reviews' />
         <SearchBox />
       </div>
@@ -35,6 +31,7 @@ export default async function ReviewsPage({ searchParams }) {
             >
               <Link href={`/reviews/${review.slug}`}>
                 <Image
+                  unoptimized
                   src={review.image}
                   alt=''
                   priority={index === 0}

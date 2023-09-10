@@ -6,7 +6,6 @@ import Image from 'next/image';
 
 export default async function HomePage() {
   const { reviews } = await getReviews(3);
-  console.log(`[Home page rendering], ${reviews.map(review => review.slug)}`);
 
   return (
     <>
@@ -23,6 +22,7 @@ export default async function HomePage() {
               className='flex flex-col sm:flex-row'
             >
               <Image
+                unoptimized
                 src={image}
                 alt=''
                 priority={index === 0}

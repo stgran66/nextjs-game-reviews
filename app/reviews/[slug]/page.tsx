@@ -27,22 +27,21 @@ export default async function ReviewPage({
   params: { slug },
 }: ReviewPageProps) {
   const review = await getReview(slug);
-  console.log(`[Review page rendering], ${slug}`);
-
   if (!review) {
     notFound();
   }
-  const { title, body, image, subtitle, date } = review;
+  const { title, body, image, subtitle, createdAt } = review;
 
   return (
     <>
       <Heading>{title}</Heading>
       <p className='font-semibold pb-3'>{subtitle}</p>
       <div className='flex gap-3 items-baseline'>
-        <p className='italic pb-2'>{date}</p>
+        <p className='italic pb-2'>{createdAt}</p>
         <ShareLinkButton />
       </div>
       <Image
+        unoptimized
         src={image}
         alt=''
         priority
