@@ -22,7 +22,6 @@ export default async function HomePage() {
               className='flex flex-col sm:flex-row'
             >
               <Image
-                unoptimized
                 src={image}
                 alt=''
                 priority={index === 0}

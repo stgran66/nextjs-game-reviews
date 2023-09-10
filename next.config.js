@@ -1,10 +1,10 @@
 /** @type {import ('next').NextConfig} */
 module.exports = {
-  // output: 'export',
-  // images: {
-  //   // unoptimized:true,
-  //   remotePatterns: [toRemotePattern(process.env.CMS_IMAGE_PATTERN)],
-  // },
+  output: 'export',
+  images: {
+    loader: 'custom',
+    loaderFile: './lib/loader.ts',
+  },
 };
 
 function toRemotePattern(urlString) {
