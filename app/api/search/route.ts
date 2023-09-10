@@ -1,7 +1,9 @@
 import { searchReviews } from '@/lib/reviews';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request) {
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams.get('query');
   const reviews = await searchReviews(query, 5);
   return NextResponse.json(reviews);
